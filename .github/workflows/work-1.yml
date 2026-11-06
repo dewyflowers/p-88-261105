@@ -9,6 +9,12 @@ on:
       - "index.html"
     branches:
       - main
+
+# 권한 최소화/명시화
+permissions:
+  contents: write # 태그/릴리즈
+  packages: write # GHCR 푸시
+
 jobs:
   makeTagAndRelease:
     runs-on: ubuntu-latest
@@ -32,6 +38,7 @@ jobs:
           body: ${{ steps.create_tag.outputs.changelog }}
           draft: false
           prerelease: false
+
   buildImageAndPush:
     name: 도커 이미지 빌드와 푸시
     needs: makeTagAndRelease
